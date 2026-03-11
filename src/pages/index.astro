@@ -1,10 +1,97 @@
 ---
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Image from "astro/components/Image.astro";
+import heroIMG from "../assets/images/hero.avif";
+import musicICON from "../assets/icons/musique.svg";
+import userICON from "../assets/icons/utilisateurs.svg";
+import calendarICON from "../assets/icons/calendrier.svg";
 ---
 
-<Layout>
-	<h1>Welcome to Astro!</h1>
+<Layout title="Accueil" desc="Bienvenu au festival du Savou'Fest à Belfort">
+	<div class="relative flex flex-col items-center justify-end w-full h-150">
+		<Image
+			src={heroIMG}
+			alt="Hero Image"
+			class="absolute z-0 w-full h-full object-cover"
+		/>
+		<div
+			class="absolute z-10 w-full h-full object-cover bg-linear-to-t from-white via-40% via-transparent"
+		>
+		</div>
+		<div
+			class="relative z-20 p-5 h-75 justify-between flex flex-col items-center text-white"
+		>
+			<div class="flex flex-col items-center">
+				<h1 class="text-4xl font-black text-shadow-2xs">SAVOU'FEST</h1>
+				<h2 class="text-xl font-semibold">15 - 16 Août 2026</h2>
+			</div>
+			<a class="bg-orange-400 py-2 px-20 rounded-full">Billeterie</a>
+		</div>
+	</div>
+	<div class="grid grid-cols-3 gap-5 p-5">
+		<div
+			class="flex flex-col items-center text-center p-2 shadow-md/20 rounded-2xl justify-between gap-5 py-5"
+		>
+			<Image src={musicICON} alt="Icon de musique" class="" />
+			<h3 class="font-bold text-xl">Catégories</h3>
+			<p class="text-gray-500">Electro, Rock, Rap et Pop</p>
+		</div>
+		<div
+			class="flex flex-col items-center text-center p-2 shadow-md/20 rounded-2xl justify-between gap-5 py-5"
+		>
+			<Image src={userICON} alt="Icon d'utilisateurs" class="" />
+			<h3 class="font-bold text-xl">Artistes</h3>
+			<p class="text-gray-500">Artistes Français</p>
+		</div>
+		<div
+			class="flex flex-col items-center text-center p-2 shadow-md/20 rounded-2xl justify-between gap-3 py-5"
+		>
+			<Image src={calendarICON} alt="Icon de calendrier" class="" />
+			<h3 class="font-bold text-xl">2 Jours</h3>
+			<p class="text-gray-500">15-16 Août 2025</p>
+		</div>
+	</div>
+	<div class="px-10 flex flex-col gap-5">
+		<h2 class="text-2xl font-bold text-center mt-10">Découvrir</h2>
+		<a
+			href="/programme"
+			class="flex flex-col p-5 from-orange-400 to-orange-500 bg-linear-to-r rounded-3xl text-white gap-3 shadow-md/30"
+		>
+			<h3 class="text-xl font-semibold">Programme complet</h3>
+			<p class="text-sm">Découvre tous les artistes et horaires</p>
+		</a>
+		<a
+			href="/artiste"
+			class="flex flex-col p-5 from-cyan-400 to-cyan-500
+			bg-linear-to-r rounded-3xl text-white gap-3 shadow-md/30"
+		>
+			<h3 class="text-xl font-semibold">Liste des artistes</h3>
+			<p class="text-sm">Les artistes incontournables de cette édition</p>
+		</a>
+		<a
+			href="/infos"
+			class="flex flex-col p-5 from-orange-400 to-orange-500
+			bg-linear-to-r rounded-3xl text-white gap-3 shadow-md/30"
+		>
+			<h3 class="text-xl font-semibold">Le festival</h3>
+			<p class="text-sm">Notre histoire, nos valeurs et notre équipe</p>
+		</a>
+	</div>
+	<div class="">
+		<h2 class="text-2xl font-bold text-center mt-10">Nos Partenaire</h2>
+		<div class="grid grid-cols-2 gap-5 p-10 font-semibold">
+			<a href="" class="p-3 text-center text-lg shadow-md/20 rounded-xl"
+				>Radio Groove</a
+			>
+			<a href="" class="p-3 text-center text-lg shadow-md/20 rounded-xl"
+				>Energy Drink Co.</a
+			>
+			<a href="" class="p-3 text-center text-lg shadow-md/20 rounded-xl"
+				>Festival Alliance</a
+			>
+			<a href="" class="p-3 text-center text-lg shadow-md/20 rounded-xl"
+				>City Tours</a
+			>
+		</div>
+	</div>
 </Layout>

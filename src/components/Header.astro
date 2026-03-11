@@ -1,0 +1,83 @@
+---
+import Image from "astro/components/Image.astro";
+import lemon from "../assets/images/lemon.svg";
+import avatar from "../assets/images/avatar.svg";
+
+const { title } = Astro.props;
+---
+
+<header
+    class="from-orange-400 to-orange-500 bg-linear-to-l p-7 grid grid-cols-4 w-full top-0 left-0 relative"
+    id="main-header"
+>
+    <a href="/" class="title z-40 col-start-2 col-span-2 text-center">
+        <h1 class="text-2xl font-black text-white">SAVOU'FEST</h1>
+        <h2 class="font-semibold text-white text-xl">{title}</h2>
+    </a>
+    <div class="col-start-4 z-40 flex justify-end items-center">
+        <button
+            class="flex flex-col gap-1.5"
+            id="menu-toggle"
+            aria-label="Ouvrir le menu de navigation"
+            aria-controls="main-menu"
+            aria-expanded="false"
+        >
+            <span
+                class="block w-7 h-[2px] bg-white rounded-full"
+                aria-hidden="true"></span>
+            <span
+                class="block w-7 h-[2px] bg-white rounded-full"
+                aria-hidden="true"></span>
+            <span
+                class="block w-7 h-[2px] bg-white rounded-full"
+                aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <div class="z-10 absolute w-full z h-full flex justify-between">
+        <Image src={lemon} alt="Lemon" class="h-full w-auto opacity-40" />
+        <Image src={avatar} alt="Avatar" class="h-full w-auto opacity-40" />
+    </div>
+</header>
+<nav
+    class="from-orange-400 to-orange-500 bg-linear-to-l fixed z-30 top-0 h-screen w-full flex items-center justify-center p-10"
+    id="main-menu"
+    aria-label="Menu principal"
+    role="navigation"
+>
+    <ul
+        class="flex flex-col gap-5 text-white font-semibold text-2xl items-end w-full"
+        role="menu"
+    >
+        <a href="/" role="menuitem"><li>Accueuil</li></a>
+        <a href="/artiste" role="menuitem"><li>Artistes</li></a>
+        <a href="/programme" role="menuitem"><li>Programme</li></a>
+        <a href="/scene" role="menuitem"><li>Scenes</li></a>
+        <a href="/infos" role="menuitem"><li>Infos Pratique</li></a>
+        <a href="/contact" role="menuitem"><li>Contact</li></a>
+        <a href="/account" role="menuitem"><li>Compte</li></a>
+    </ul>
+</nav>
+
+<script>
+    const menu = document.getElementById("main-menu");
+    const button = document.getElementById("menu-toggle");
+    const header = document.getElementById("main-header");
+    let menuOpen = false;
+
+    menu.style.display = "none";
+    button.setAttribute("aria-expanded", "false");
+
+    button.addEventListener("click", () => {
+        menuOpen = !menuOpen;
+        menu.style.display = menuOpen ? "flex" : "none";
+        document.body.style.overflow = menuOpen ? "hidden" : "";
+        button.setAttribute("aria-expanded", menuOpen ? "true" : "false");
+        if (menuOpen) {
+            header.classList.add("fixed");
+            menu.focus();
+        } else {
+            header.classList.remove("fixed");
+        }
+    });
+</script>

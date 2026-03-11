@@ -1,0 +1,188 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Mon Compte">
+    <main class="min-h-screen bg-gray-50 p-6">
+        <div class="max-w-2xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-black text-gray-900">Mon Profil</h1>
+                <button
+                    id="logoutBtn"
+                    class="px-4 py-2 bg-red-50 text-red-600 font-bold rounded-xl hover:bg-red-100 transition-colors"
+                >
+                    Déconnexion
+                </button>
+            </div>
+
+            <div
+                class="bg-white rounded-[2.5rem] shadow-xl p-8 md:p-10 border border-gray-100"
+            >
+                <form id="updateForm" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label
+                                for="name"
+                                class="block font-bold text-gray-700 ml-1"
+                                >Nom complet</label
+                            >
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 outline-none transition-all"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                for="email"
+                                class="block font-bold text-gray-700 ml-1"
+                                >Email</label
+                            >
+                            <input
+                                type="email"
+                                id="email"
+                                disabled
+                                class="w-full px-6 py-4 rounded-2xl border border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed"
+                            />
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100 my-4" />
+
+                    <p
+                        class="text-sm font-bold text-gray-400 uppercase tracking-wider ml-1"
+                    >
+                        Changer le mot de passe
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label
+                                for="password"
+                                class="block font-bold text-gray-700 ml-1"
+                                >Nouveau mot de passe</label
+                            >
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Laisser vide si inchangé"
+                                class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 outline-none"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                for="passwordConfirm"
+                                class="block font-bold text-gray-700 ml-1"
+                                >Confirmer</label
+                            >
+                            <input
+                                type="password"
+                                id="passwordConfirm"
+                                name="passwordConfirm"
+                                class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 outline-none"
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        id="statusMsg"
+                        class="hidden p-4 rounded-xl text-center font-bold text-sm"
+                    >
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full bg-gray-900 text-white font-black py-4 rounded-2xl hover:bg-purple-600 transition-all shadow-lg mt-4"
+                    >
+                        Enregistrer les modifications
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<script>
+    import {
+        isLogged,
+        getUserInfo,
+        logout,
+    } from "../../../backend/backend.mjs";
+    import PocketBase from "pocketbase";
+
+    const pb = new PocketBase("http://127.0.0.1:8090");
+    const form = document.getElementById("updateForm") as HTMLFormElement;
+    const statusMsg = document.getElementById("statusMsg");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    // 1. Protection de la page : vérification immédiate
+    if (!isLogged()) {
+        window.location.href = "/account/login"; // ou /account/login selon ton dossier
+    } else {
+        // 2. Pré-remplissage des champs
+        const user = getUserInfo();
+        if (user) {
+            (document.getElementById("name") as HTMLInputElement).value =
+                user.name || "";
+            (document.getElementById("email") as HTMLInputElement).value =
+                user.email;
+        }
+    }
+
+    // 3. Gestion de la mise à jour
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const user = getUserInfo();
+        if (!user) return;
+
+        const formData = new FormData(form);
+        const data: any = {
+            name: formData.get("name"),
+        };
+
+        // Si l'utilisateur a rempli le champ password
+        const password = formData.get("password") as string;
+        const passwordConfirm = formData.get("passwordConfirm") as string;
+
+        if (password) {
+            if (password !== passwordConfirm) {
+                showStatus("Les mots de passe ne correspondent pas", true);
+                return;
+            }
+            data.password = password;
+            data.passwordConfirm = passwordConfirm;
+        }
+
+        try {
+            // Mise à jour dans PocketBase
+            await pb.collection("users").update(user.id, data);
+            showStatus("Profil mis à jour avec succès !", false);
+
+            // Optionnel : vider les champs password après succès
+            (document.getElementById("password") as HTMLInputElement).value =
+                "";
+            (
+                document.getElementById("passwordConfirm") as HTMLInputElement
+            ).value = "";
+        } catch (err) {
+            showStatus("Erreur lors de la mise à jour.", true);
+        }
+    });
+
+    // 4. Déconnexion
+    logoutBtn?.addEventListener("click", () => {
+        logout();
+        window.location.href = "/account/login";
+    });
+
+    function showStatus(msg: string, isError: boolean) {
+        if (!statusMsg) return;
+        statusMsg.textContent = msg;
+        statusMsg.className = `p-4 rounded-xl text-center font-bold text-sm ${isError ? "bg-red-50 text-red-600" : "bg-green-50 text-green-600"}`;
+        statusMsg.classList.remove("hidden");
+    }
+</script>

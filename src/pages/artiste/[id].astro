@@ -1,0 +1,67 @@
+---
+import PbImage from "../../components/PbImage.astro";
+import {
+    getOneArtist,
+    fortmatDateHour,
+    formatDateNoHour,
+} from "../../../backend/backend.mjs";
+import Layout from "../../layouts/Layout.astro";
+const { id } = Astro.params;
+const artiste = await getOneArtist(id);
+const formatedDate = formatDateNoHour(artiste.date);
+const formatedHour = fortmatDateHour(artiste.date);
+---
+
+<Layout
+    title=`${artiste.name}`
+    desc=`Page dédiée à la description de ${artiste.name}`
+>
+    <div class="relative w-full h-75 flex items-end">
+        <PbImage
+            record={artiste}
+            imageField={artiste.cover}
+            classlist="w-full h-full object-cover absolute"
+        />
+        <div class="overlay absolute z-10 w-full h-full bg-black/40"></div>
+        <h1 class="relative z-20 text-2xl font-bold text-white px-7 py-5">
+            {artiste.name}
+        </h1>
+    </div>
+    <div class="p-10 flex flex-col gap-5">
+        <div class="bg-orange-400 p-5 rounded-2xl text-white">
+            <p class="font-bold text-lg">Info performance</p>
+            <p>
+                <span class="font-semibold">{formatedDate}</span> - {
+                    formatedHour
+                }
+            </p>
+            <p>{artiste.expand.scene.name}</p>
+        </div>
+        <div class="shadow-md/30 p-5 rounded-2xl">
+            <p class="font-bold text-lg">Biographie</p>
+            <p>
+                {artiste.bio}
+            </p>
+        </div>
+        <div class="flex overflow-x-auto gap-5">
+            <PbImage
+                record={artiste}
+                imageField={artiste.images}
+                index={0}
+                classlist="w-5/6 aspect-16/9 object-cover rounded-2xl"
+            />
+            <PbImage
+                record={artiste}
+                imageField={artiste.images}
+                index={1}
+                classlist="w-5/6 aspect-16/9 object-cover rounded-2xl"
+            />
+            <PbImage
+                record={artiste}
+                imageField={artiste.images}
+                index={2}
+                classlist="w-5/6 aspect-16/9 object-cover rounded-2xl"
+            />
+        </div>
+    </div>
+</Layout>

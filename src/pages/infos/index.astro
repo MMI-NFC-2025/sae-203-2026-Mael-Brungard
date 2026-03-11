@@ -1,0 +1,154 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Image from "astro/components/Image.astro";
+
+const faqs = [
+    {
+        question: "Peut-on entrer et sortir du Fest ?",
+        answer: "Toute sortie est définitive pour les détenteurs d'un pass 1 jour. Pour les pass 3 jours, les allers-retours sont autorisés jusqu'à 19h chaque jour munis de votre bracelet.",
+    },
+    {
+        question: "La nourriture est elle autorisée ?",
+        answer: "Les pique-niques ne sont pas autorisés sur le site. Nous proposons une large sélection de foodtrucks locaux (options végétariennes et vegan disponibles). Les gourdes vides sont acceptées.",
+    },
+    {
+        question: "Quel est l’âge minimum ?",
+        answer: "Le festival est ouvert à tous ! L'entrée est gratuite pour les enfants de moins de 12 ans accompagnés d'un adulte. Une protection auditive est fortement recommandée pour les plus jeunes.",
+    },
+    {
+        question: "Paiements par carte ?",
+        answer: "Le festival est 100% Cashless. Vous pourrez recharger votre bracelet via l'application mobile ou aux bornes de rechargement sur place par carte bancaire ou espèces.",
+    },
+    {
+        question: "Des consignes pour les bagages ?",
+        answer: "Oui, des casiers sécurisés sont disponibles à l'entrée du festival. Attention, les sacs volumineux et valises ne sont pas admis pour des raisons de sécurité (plan Vigipirate).",
+    },
+];
+---
+
+<Layout
+    title="Infos Pratiques"
+    desc="Plus d'informations sur le festival du SAVOU'FEST"
+>
+    <div class="p-10 flex flex-col gap-5">
+        <div class="flex flex-col gap-5">
+            <h2 class="text-2xl font-bold mt-10">Tarifs et Billetterie</h2>
+            <div
+                class="flex flex-col p-5 rounded-3xl text-black gap-3 shadow-md/30"
+            >
+                <h3 class="text-xl font-bold">Passe 1 jour</h3>
+                <h4 class="text-xl font-semibold">45€</h4>
+                <p class="text-sm">Accès à toutes les scènes pour 1 jour</p>
+            </div>
+            <div
+                class="flex flex-col p-5 from-orange-400 to-orange-500 bg-linear-to-r rounded-3xl text-white gap-3 shadow-md/30"
+            >
+                <h3 class="text-xl font-bold">Pass 2 jours</h3>
+                <h4 class="text-xl font-semibold">110€</h4>
+                <p class="text-sm">Accès complet au festival</p>
+            </div>
+            <div
+                class="flex flex-col p-5 rounded-3xl text-black gap-3 shadow-md/30"
+            >
+                <h3 class="text-xl font-bold">Pass 2 jours VIP</h3>
+                <h4 class="text-xl font-semibold">250€</h4>
+                <p class="text-sm">Accès VIP + backstage + goodies</p>
+            </div>
+        </div>
+        <div class="flex flex-col gap-5">
+            <h2 class="text-2xl font-bold mt-10">Hébergements</h2>
+            <div
+                class="flex flex-col p-5 rounded-3xl text-black gap-3 shadow-md/30"
+            >
+                <h3 class="text-xl font-bold">Camping Festival</h3>
+                <p class="text-sm text-orange-400">À partir de 30€/nuit</p>
+                <p class="text-sm">Accès à toutes les scènes pour 1 jour</p>
+            </div>
+            <div
+                class="flex flex-col p-5 rounded-3xl text-black gap-3 shadow-md/30"
+            >
+                <h3 class="text-xl font-bold">Hôtels Partenaires</h3>
+                <p class="text-sm text-orange-400">À partir de 80€/nuit</p>
+                <p class="text-sm">Accès complet au festival</p>
+            </div>
+            <div
+                class="flex flex-col p-5 rounded-3xl text-black gap-3 shadow-md/30"
+            >
+                <h3 class="text-xl font-bold">Auberges de Jeunesse</h3>
+                <p class="text-sm text-orange-400">À partir de 25€/nuit</p>
+                <p class="text-sm">Accès VIP + backstage + goodies</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-5">
+            <h2 class="text-2xl font-bold">Transports</h2>
+            <div class="mb-10 pb-5 pl-7 flex flex-col gap-5 shadow-md/30">
+                <div
+                    class="flex items-center p-5 rounded-3xl text-black gap-3 flex"
+                >
+                    <div class="point h-3 w-3 bg-cyan-400 rounded-full"></div>
+                    <div class="flex flex-col">
+                        <h3 class="text-xl font-bold">Navettes Gratuites</h3>
+                        <p class="text-sm">
+                            Accès à toutes les scènes pour 1 jour
+                        </p>
+                    </div>
+                </div>
+                <div class="p-5 items-center rounded-3xl text-black gap-3 flex">
+                    <div class="point h-3 w-3 bg-orange-400 rounded-full"></div>
+                    <div class="flex flex-col">
+                        <h3 class="text-xl font-bold">Métro Ligne 5</h3>
+                        <p class="text-sm">
+                            Depuis la gare et principaux hôtels
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center p-5 rounded-3xl text-black gap-3 flex"
+                >
+                    <div class="point h-3 w-3 bg-cyan-400 rounded-full"></div>
+                    <div class="flex flex-col">
+                        <h3 class="text-xl font-bold">Parking Gratuit</h3>
+                        <p class="text-sm">1000 places disponibles sur site</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-5">
+            <h2 class="text-2xl font-bold">Questions Fréquentes</h2>
+            <div class="space-y-6">
+                {
+                    faqs.map((faq) => (
+                        <details class="group bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden transition-all duration-300">
+                            <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                <span class="text-base font-bold text-gray-900 pr-4">
+                                    {faq.question}
+                                </span>
+                                <div class="text-cyan-400 transition-transform duration-300 group-open:rotate-180">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="2.5"
+                                        stroke="currentColor"
+                                        class="w-6 h-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                                        />
+                                    </svg>
+                                </div>
+                            </summary>
+
+                            <div class="px-6 text-sm pb-6 text-gray-600 leading-relaxed animate-fadeIn">
+                                {faq.answer}
+                            </div>
+                        </details>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</Layout>

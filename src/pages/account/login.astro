@@ -1,0 +1,106 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Connexion">
+    <main class="min-h-[80vh] flex items-center justify-center p-6 bg-gray-50">
+        <div
+            class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl p-8 md:p-12 border border-gray-100"
+        >
+            <div class="text-center mb-10">
+                <h1 class="text-3xl font-black text-gray-900">Connexion</h1>
+                <p class="text-gray-500 mt-2 font-medium">
+                    Accédez à votre espace festivalier
+                </p>
+            </div>
+
+            <form id="loginForm" class="space-y-6">
+                <div class="space-y-2">
+                    <label
+                        for="email"
+                        class="block font-bold text-gray-700 ml-1">Email</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="votre@email.com"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <label
+                        for="password"
+                        class="block font-bold text-gray-700 ml-1"
+                        >Mot de passe</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                        placeholder="••••••••"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                    />
+                </div>
+
+                <div
+                    id="errorMessage"
+                    class="hidden p-4 bg-red-50 border border-red-200 text-red-600 text-sm font-bold rounded-xl text-center"
+                >
+                    Identifiants incorrects. Veuillez réessayer.
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-gray-900 text-white font-black py-4 rounded-2xl hover:bg-purple-600 active:scale-95 transition-all shadow-lg shadow-gray-200"
+                >
+                    Se connecter
+                </button>
+            </form>
+
+            <p class="text-center mt-8 text-gray-500 font-medium">
+                Pas encore de compte ?
+                <a
+                    href="/account/register"
+                    class="text-purple-600 font-bold hover:underline"
+                    >S'inscrire</a
+                >
+            </p>
+        </div>
+    </main>
+</Layout>
+
+<script>
+    import { Userauth } from "../../../backend/backend.mjs";
+
+    const form = document.getElementById("loginForm") as HTMLFormElement;
+    const errorMsg = document.getElementById("errorMessage");
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // On cache l'erreur à chaque tentative
+        errorMsg?.classList.add("hidden");
+
+        const formData = new FormData(form);
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+
+        try {
+            const auth = await Userauth(email, password);
+
+            if (auth) {
+                // Redirection vers l'accueil ou le tableau de bord si succès
+                window.location.href = "/";
+            } else {
+                // Afficher le message d'erreur si échec
+                errorMsg?.classList.remove("hidden");
+            }
+        } catch (err) {
+            errorMsg?.classList.remove("hidden");
+        }
+    });
+</script>

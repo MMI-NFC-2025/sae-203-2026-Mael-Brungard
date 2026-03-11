@@ -1,0 +1,22 @@
+---
+import { getScenesByName } from "../../../backend/backend.mjs";
+import { formatDateNoHour } from "../../../backend/backend.mjs";
+import SceneCard from "../../components/SceneCard.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const scenes = await getScenesByName();
+
+console.log(scenes);
+---
+
+<Layout
+    title="Scenes"
+    desc="Liste des scènes présentes au SAVOU'FEST de Belfort."
+>
+    <div class="px-5 pt-10">
+        <h2 class="text-2xl font-bold">Scènes</h2>
+        <div class="flex flex-col p-10 gap-6">
+            {scenes.map((scene) => <SceneCard scene={scene} />)}
+        </div>
+    </div>
+</Layout>

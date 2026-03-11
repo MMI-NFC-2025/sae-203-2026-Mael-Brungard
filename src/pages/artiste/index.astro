@@ -1,0 +1,99 @@
+---
+import { getArtistsByGenre } from "../../../backend/backend.mjs";
+import { formatDateNoHour } from "../../../backend/backend.mjs";
+import EventCard from "../../components/EventCard.astro";
+import Layout from "../../layouts/Layout.astro";
+
+let artistes = await getArtistsByGenre("Tout");
+const genre = ["Tout", ...new Set(artistes.map((e) => e.genre))];
+const scenes = ["Tout", ...new Set(artistes.map((e) => e.expand.scene.name))];
+console.log(artistes);
+const daysRaw = [
+    "Tout",
+    ...new Set(artistes.map((e) => e.date?.split("T")[0] || "")),
+];
+const days = daysRaw.map((d) => (d === "Tout" ? "Tout" : formatDateNoHour(d)));
+
+let selectedGenre = "Tout";
+let selectedScene = "Tout";
+let selectedDay = "Tout";
+
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    selectedGenre = (data.get("genre") || "Tout").toString();
+    selectedScene = (data.get("scene") || "Tout").toString();
+    selectedDay = (data.get("day") || "Tout").toString();
+    artistes = artistes.filter(
+        (e) =>
+            (selectedGenre === "Tout" || e.genre === selectedGenre) &&
+            (selectedScene === "Tout" ||
+                (e.expand?.scene?.name || e.scene) === selectedScene) &&
+            (selectedDay === "Tout" ||
+                (e.date && e.date.split("T")[0] === selectedDay)),
+    );
+}
+---
+
+<Layout
+    title="Artistes"
+    desc="Liste des artistes présent au SAVOU'FEST de Belfort."
+>
+    <div class="px-5 pt-10">
+        <h2 class="text-2xl font-bold mb-6">Filtres</h2>
+        <form action="/artiste" method="post" class="flex flex-col gap-5">
+            <div class="overflow-x-auto mb-4">
+                <div class="flex gap-3 w-max">
+                    {
+                        genre.map((g) => (
+                            <button
+                                type="submit"
+                                name="genre"
+                                value={g}
+                                class={`px-6 py-2 rounded-full font-semibold transition-all ${selectedGenre === g ? "bg-cyan-400 text-white" : "bg-gray-100 text-black hover:bg-gray-300"}`}
+                            >
+                                {g}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="overflow-x-auto mb-4">
+                <div class="flex gap-3 w-max">
+                    {
+                        scenes.map((s) => (
+                            <button
+                                type="submit"
+                                name="scene"
+                                value={s}
+                                class={`px-6 py-2 rounded-full font-semibold transition-all ${selectedScene === s ? "bg-cyan-400 text-white" : "bg-gray-100 text-black hover:bg-gray-300"}`}
+                            >
+                                {s === "Tout" ? "Tout" : s}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="overflow-x-auto mb-4">
+                <div class="flex gap-3 w-max">
+                    {
+                        days.map((d, i) => (
+                            <button
+                                type="submit"
+                                name="day"
+                                value={daysRaw[i]}
+                                class={`px-6 py-2 rounded-full font-semibold transition-all ${selectedDay === daysRaw[i] ? "bg-cyan-400 text-white" : "bg-gray-100 text-black hover:bg-gray-300"}`}
+                            >
+                                {d}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="flex flex-col p-10 gap-6">
+        {artistes.map((artiste) => <EventCard art={artiste} />)}
+    </div>
+</Layout>

@@ -1,0 +1,30 @@
+---
+import Image from "astro/components/Image.astro";
+import ig from "../assets/icons/ig.svg";
+import fb from "../assets/icons/fb.svg";
+import yt from "../assets/icons/yt.svg";
+---
+
+<footer
+    class="w-full p-10 from-cyan-400 to-cyan-500 bg-linear-to-l flex flex-col items-center text-white text-center gap-2"
+>
+    <p class="text-2xl font-bold">SAVOU'FEST</p>
+    <div class="">
+        <p>contact@savoufest.fr</p>
+        <p>+33 06 ** ** ** **</p>
+    </div>
+    <ul class="flex items-center gap-2">
+        <li><Image src={ig} alt="ig icon" class="" /></li>
+        <li><div class="rounded-full bg-white h-2 w-2"></div></li>
+        <li><Image src={fb} alt="fb icon" class="" /></li>
+        <li><div class="rounded-full bg-white h-2 w-2"></div></li>
+        <li><Image src={yt} alt="yt icon" class="" /></li>
+    </ul>
+    <ul class="flex items-center gap-2">
+        <li>Mentions légales</li>
+        <li><div class="rounded-full bg-white h-2 w-2"></div></li>
+        <li>CGV</li>
+        <li><div class="rounded-full bg-white h-2 w-2"></div></li>
+        <li>Confidentialité</li>
+    </ul>
+</footer>

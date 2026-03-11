@@ -1,0 +1,28 @@
+---
+const { art } = Astro.props;
+
+import { formatDate } from "../../backend/backend.mjs";
+import PbImage from "./PbImage.astro";
+
+const formattedDate = formatDate(art.date);
+---
+
+<a
+    href=`/artiste/${art.id}`
+    class="rounded-3xl overflow-hidden shadow-md/30 relative"
+>
+    <PbImage
+        record={art}
+        imageField={art.cover}
+        classlist="w-full object-cover aspect-2/1"
+    />
+    <div class="py-3 px-5">
+        <p class="text-lg font-bold">{art.name}</p>
+        <p class="text-base text-gray-500">{formattedDate}</p>
+    </div>
+    <div
+        class=`absolute ${(art.genre === 'rock') ? 'bg-linear-to-r from-orange-400 to-orange-500' : (art.genre === 'pop') ? 'bg-linear-to-r from-purple-400 to-purple-500' : (art.genre === 'rap')? 'bg-linear-to-r from-red-400 to-red-500' : 'bg-linear-to-r from-blue-400 to-blue-500'} z-10 text-white font-semibold top-5 right-5 px-5 py-1 rounded-full`
+    >
+        {art.genre}
+    </div>
+</a>

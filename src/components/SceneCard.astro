@@ -1,0 +1,22 @@
+---
+const { scene } = Astro.props;
+
+import { formatDate } from "../../backend/backend.mjs";
+import PbImage from "./PbImage.astro";
+---
+
+<a
+    href=`/scene/${scene.id}`
+    class="rounded-3xl overflow-hidden shadow-md/30 relative"
+>
+    <PbImage
+        record={scene}
+        imageField={scene.image}
+        classlist="w-full object-cover aspect-2/1"
+    />
+    <div class="py-3 px-5">
+        <p class="text-lg font-bold">{scene.name}</p>
+        <p class="text-lg font-medium">Place : {scene.loc}</p>
+        <p class="text-lg text-orange-400">Capacité : {scene.capacity}</p>
+    </div>
+</a>

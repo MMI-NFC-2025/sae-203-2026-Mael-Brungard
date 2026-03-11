@@ -1,0 +1,170 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Inscription">
+    <main class="min-h-[90vh] flex items-center justify-center p-6 bg-gray-50">
+        <div
+            class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl p-8 md:p-12 border border-gray-100"
+        >
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-black text-gray-900">
+                    Créer un compte
+                </h1>
+                <p class="text-gray-500 mt-2 font-medium">
+                    Rejoins l'aventure Savoufest
+                </p>
+            </div>
+
+            <form id="registerForm" class="space-y-5">
+                <div class="space-y-2">
+                    <label for="name" class="block font-bold text-gray-700 ml-1"
+                        >Nom complet</label
+                    >
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        placeholder="Ton nom"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <label
+                        for="email"
+                        class="block font-bold text-gray-700 ml-1">Email</label
+                    >
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        placeholder="ton.email@exemple.com"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <label
+                        for="password"
+                        class="block font-bold text-gray-700 ml-1"
+                        >Mot de passe</label
+                    >
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                        minlength="8"
+                        placeholder="8 caractères min."
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                    />
+                </div>
+
+                <div class="space-y-2">
+                    <label
+                        for="passwordConfirm"
+                        class="block font-bold text-gray-700 ml-1"
+                        >Confirmer le mot de passe</label
+                    >
+                    <input
+                        type="password"
+                        id="passwordConfirm"
+                        name="passwordConfirm"
+                        required
+                        placeholder="••••••••"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                    />
+                </div>
+
+                <div
+                    id="statusMessage"
+                    class="hidden p-4 text-sm font-bold rounded-xl text-center"
+                >
+                </div>
+
+                <button
+                    type="submit"
+                    class="w-full bg-purple-600 text-white font-black py-4 rounded-2xl hover:bg-gray-900 active:scale-95 transition-all shadow-lg shadow-purple-100 mt-2"
+                >
+                    S'inscrire
+                </button>
+            </form>
+
+            <p class="text-center mt-8 text-gray-500 font-medium">
+                Déjà un compte ?
+                <a
+                    href="/account/login"
+                    class="text-purple-600 font-bold hover:underline"
+                    >Se connecter</a
+                >
+            </p>
+        </div>
+    </main>
+</Layout>
+
+<script>
+    import { createUser, Userauth } from "../../../backend/backend.mjs";
+
+    const form = document.getElementById("registerForm") as HTMLFormElement;
+    const statusMsg = document.getElementById("statusMessage");
+
+    function showMessage(text: string, isError: boolean) {
+        if (!statusMsg) return;
+        statusMsg.textContent = text;
+        statusMsg.classList.remove(
+            "hidden",
+            "bg-red-50",
+            "text-red-600",
+            "bg-green-50",
+            "text-green-600",
+        );
+        statusMsg.classList.add(isError ? "bg-red-50" : "bg-green-50");
+        statusMsg.classList.add(isError ? "text-red-600" : "text-green-600");
+    }
+
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+        const passwordConfirm = formData.get("passwordConfirm") as string;
+        const name = formData.get("name") as string;
+
+        // Validation simple côté client
+        if (password !== passwordConfirm) {
+            showMessage("Les mots de passe ne correspondent pas.", true);
+            return;
+        }
+
+        try {
+            // 1. Création du compte
+            const user = await createUser(
+                email,
+                password,
+                passwordConfirm,
+                name,
+            );
+
+            if (user) {
+                showMessage("Compte créé ! Connexion en cours...", false);
+
+                // 2. Connexion automatique après inscription
+                const auth = await Userauth(email, password);
+                if (auth) {
+                    window.location.href = "/";
+                }
+            } else {
+                showMessage(
+                    "Erreur lors de l'inscription. L'email est peut-être déjà utilisé.",
+                    true,
+                );
+            }
+        } catch (err) {
+            showMessage("Une erreur inattendue est survenue.", true);
+        }
+    });
+</script>

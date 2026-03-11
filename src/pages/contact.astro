@@ -1,0 +1,186 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <div class="flex flex-col p-10 gap-5">
+        <div class="space-y-6">
+            <h2 class="text-2xl font-black text-gray-900">Coordonnées</h2>
+
+            <div class="rounded-lg p-8 space-y-8 shadow-md/20">
+                <div class="flex items-center gap-6">
+                    <div class="text-gray-900">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="28"
+                            height="28"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><rect width="20" height="16" x="2" y="4" rx="2"
+                            ></rect><path
+                                d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                            ></path></svg
+                        >
+                    </div>
+                    <div>
+                        <p class="font-black text-lg leading-tight">Email</p>
+                        <p class="text-gray-500 font-medium">
+                            contact@savoufest.fr
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div class="text-gray-900">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="28"
+                            height="28"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                            ></path></svg
+                        >
+                    </div>
+                    <div>
+                        <p class="font-black text-lg leading-tight">
+                            Téléphone
+                        </p>
+                        <p class="text-gray-500 font-medium">
+                            +33 04 ** ** ** **
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6">
+                    <div class="text-gray-900">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="28"
+                            height="28"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path
+                                d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"
+                            ></path><circle cx="12" cy="10" r="3"></circle></svg
+                        >
+                    </div>
+                    <div>
+                        <p class="font-black text-lg leading-tight">Adresse</p>
+                        <p class="text-gray-500 font-medium">Savoufest</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <h2 class="text-2xl font-black text-gray-900">
+                Formulaire de Contact
+            </h2>
+
+            <div
+                class="bg-white border border-gray-100 rounded-xl shadow-xl p-8 md:p-10"
+            >
+                <form class="space-y-5">
+                    <div class="space-y-2">
+                        <label
+                            for="name"
+                            class="block font-bold text-gray-700 ml-1"
+                            >Nom complet</label
+                        >
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Ton nom"
+                            class="w-full px-6 py-4 rounded-2xl border border-gray-300 * focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                        />
+                    </div>
+
+                    <div class="space-y-2">
+                        <label
+                            for="email"
+                            class="block font-bold text-gray-700 ml-1"
+                            >Email</label
+                        >
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="ton.email@exemple.com"
+                            class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                        />
+                    </div>
+
+                    <div class="space-y-2">
+                        <label
+                            for="subject"
+                            class="block font-bold text-gray-700 ml-1"
+                            >Sujet</label
+                        >
+                        <div class="relative">
+                            <select
+                                id="subject"
+                                class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none appearance-none bg-white transition-all text-gray-400 focus:text-gray-900"
+                            >
+                                <option value="" disabled selected
+                                    >Sélectionne un sujet</option
+                                >
+                                <option value="billetterie">Billetterie</option>
+                                <option value="presse">Presse</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                            <div
+                                class="absolute inset-y-0 right-5 flex items-center pointer-events-none text-gray-400"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="20"
+                                    height="20"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path d="m6 9 6 6 6-6"></path></svg
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label
+                            for="message"
+                            class="block font-bold text-gray-700 ml-1"
+                            >Message</label
+                        >
+                        <textarea
+                            id="message"
+                            rows="5"
+                            placeholder="Ton message..."
+                            class="w-full px-6 py-4 rounded-[2rem] border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400 resize-none"
+                        ></textarea>
+                    </div>
+
+                    <button
+                        class="w-full bg-gray-900 text-white font-bold py-4 rounded-2xl hover:bg-purple-600 transition-colors mt-4"
+                    >
+                        Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</Layout>

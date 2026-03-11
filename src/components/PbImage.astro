@@ -1,0 +1,37 @@
+---
+import { getImageUrl } from "../../backend/backend.mjs";
+import { Image } from "astro:assets";
+
+const {
+    record,
+    imageField,
+    classlist,
+    width = 300,
+    height = 300,
+    thumb,
+    index = 0,
+} = Astro.props;
+let imageFile = null;
+
+if (Array.isArray(imageField)) {
+    console.log("list");
+    imageFile = imageField[index];
+} else {
+    imageFile = imageField;
+}
+
+const imageURL = await getImageUrl(record, imageFile, thumb);
+console.log("imageURL:", imageFile);
+---
+
+{
+    imageURL && (
+        <Image
+            src={imageURL}
+            alt={record.name || "cover"}
+            width={width}
+            height={height}
+            class={classlist}
+        />
+    )
+}
