@@ -93,7 +93,7 @@ if (Astro.request.method === "POST") {
             </div>
         </form>
     </div>
-    <div class="flex flex-col p-10 gap-6">
+    <div class="flex flex-col p-10 gap-6 lg:grid lg:grid-cols-2">
         {artistes.map((artiste) => <EventCard art={artiste} />)}
     </div>
 </Layout>

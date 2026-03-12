@@ -5,7 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Connexion">
     <main class="min-h-[80vh] flex items-center justify-center p-6 bg-gray-50">
         <div
-            class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl p-8 md:p-12 border border-gray-100"
+            class="w-full max-w-md bg-white rounded-[2.5rem] shadow-xl p-8 lg:p-12 border border-gray-100"
         >
             <div class="text-center mb-10">
                 <h1 class="text-3xl font-black text-gray-900">Connexion</h1>
@@ -26,7 +26,7 @@ import Layout from "../../layouts/Layout.astro";
                         name="email"
                         required
                         placeholder="votre@email.com"
-                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 outline-none transition-all placeholder:text-gray-400"
                     />
                 </div>
 
@@ -42,7 +42,7 @@ import Layout from "../../layouts/Layout.astro";
                         name="password"
                         required
                         placeholder="••••••••"
-                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 focus:ring-2 focus:ring-purple-600 focus:border-transparent outline-none transition-all placeholder:text-gray-400"
+                        class="w-full px-6 py-4 rounded-2xl border border-gray-300 outline-none transition-all placeholder:text-gray-400"
                     />
                 </div>
 
@@ -55,7 +55,7 @@ import Layout from "../../layouts/Layout.astro";
 
                 <button
                     type="submit"
-                    class="w-full bg-gray-900 text-white font-black py-4 rounded-2xl hover:bg-purple-600 active:scale-95 transition-all shadow-lg shadow-gray-200"
+                    class="w-full text-white hover:bg-transparent hover:text-black font-black py-4 rounded-2xl bg-gray-900 active:scale-95 transition-all shadow-lg mt-2"
                 >
                     Se connecter
                 </button>
@@ -63,9 +63,7 @@ import Layout from "../../layouts/Layout.astro";
 
             <p class="text-center mt-8 text-gray-500 font-medium">
                 Pas encore de compte ?
-                <a
-                    href="/account/register"
-                    class="text-purple-600 font-bold hover:underline"
+                <a href="/account/register" class="font-bold hover:underline"
                     >S'inscrire</a
                 >
             </p>
@@ -93,10 +91,8 @@ import Layout from "../../layouts/Layout.astro";
             const auth = await Userauth(email, password);
 
             if (auth) {
-                // Redirection vers l'accueil ou le tableau de bord si succès
-                window.location.href = "/";
+                window.location.href = "/account";
             } else {
-                // Afficher le message d'erreur si échec
                 errorMsg?.classList.remove("hidden");
             }
         } catch (err) {

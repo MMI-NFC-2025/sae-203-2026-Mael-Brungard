@@ -7,77 +7,134 @@ const { title } = Astro.props;
 ---
 
 <header
-    class="from-orange-400 to-orange-500 bg-linear-to-l p-7 grid grid-cols-4 w-full top-0 left-0 relative"
+    class="from-orange-400 to-orange-500 bg-linear-to-l p-4 lg:p-7 w-full top-0 left-0 relative z-50 flex justify-between items-center"
     id="main-header"
 >
-    <a href="/" class="title z-40 col-start-2 col-span-2 text-center">
-        <h1 class="text-2xl font-black text-white">SAVOU'FEST</h1>
-        <h2 class="font-semibold text-white text-xl">{title}</h2>
-    </a>
-    <div class="col-start-4 z-40 flex justify-end items-center">
-        <button
-            class="flex flex-col gap-1.5"
-            id="menu-toggle"
-            aria-label="Ouvrir le menu de navigation"
-            aria-controls="main-menu"
-            aria-expanded="false"
-        >
-            <span
-                class="block w-7 h-[2px] bg-white rounded-full"
-                aria-hidden="true"></span>
-            <span
-                class="block w-7 h-[2px] bg-white rounded-full"
-                aria-hidden="true"></span>
-            <span
-                class="block w-7 h-[2px] bg-white rounded-full"
-                aria-hidden="true"></span>
-        </button>
+    <div
+        class="absolute inset-0 w-full h-full flex justify-between overflow-hidden pointer-events-none z-0"
+    >
+        <Image
+            src={lemon}
+            alt=""
+            aria-hidden="true"
+            class="h-full w-auto opacity-40"
+        />
+        <Image
+            src={avatar}
+            alt=""
+            aria-hidden="true"
+            class="h-full w-auto opacity-40"
+        />
     </div>
 
-    <div class="z-10 absolute w-full z h-full flex justify-between">
-        <Image src={lemon} alt="Lemon" class="h-full w-auto opacity-40" />
-        <Image src={avatar} alt="Avatar" class="h-full w-auto opacity-40" />
+    <div class="z-10 relative w-full justify-center flex items-center">
+        <a href="/" class="flex flex-col items-start w-fit lg:text-center">
+            <h1 class="text-2xl font-black text-white leading-tight lg:w-full">
+                SAVOU'FEST
+            </h1>
+            <h2 class="font-semibold text-white text-lg lg:text-xl lg:w-full">
+                {title}
+            </h2>
+        </a>
     </div>
+
+    <nav aria-label="Menu principal" class="hidden lg:block z-10 relative">
+        <ul class="flex gap-6 xl:gap-8 text-white font-semibold text-lg">
+            <li>
+                <a href="/" class="hover:text-orange-200 transition-colors"
+                    >Accueil</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/artiste"
+                    class="hover:text-orange-200 transition-colors">Artistes</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/programme"
+                    class="hover:text-orange-200 transition-colors">Programme</a
+                >
+            </li>
+            <li>
+                <a href="/scene" class="hover:text-orange-200 transition-colors"
+                    >Scènes</a
+                >
+            </li>
+            <li>
+                <a href="/infos" class="hover:text-orange-200 transition-colors"
+                    >Infos&nbsp;Pratiques</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/contact"
+                    class="hover:text-orange-200 transition-colors">Contact</a
+                >
+            </li>
+            <li>
+                <a
+                    href="/account"
+                    class="hover:text-orange-200 transition-colors">Compte</a
+                >
+            </li>
+        </ul>
+    </nav>
+
+    <button
+        class="lg:hidden flex flex-col gap-1.5 z-50 relative p-2"
+        id="menu-toggle"
+        aria-label="Ouvrir le menu de navigation"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+    >
+        <span class="block w-7 h-[2px] bg-white rounded-full" aria-hidden="true"
+        ></span>
+        <span class="block w-7 h-[2px] bg-white rounded-full" aria-hidden="true"
+        ></span>
+        <span class="block w-7 h-[2px] bg-white rounded-full" aria-hidden="true"
+        ></span>
+    </button>
 </header>
+
 <nav
-    class="from-orange-400 to-orange-500 bg-linear-to-l fixed z-30 top-0 h-screen w-full flex items-center justify-center p-10"
-    id="main-menu"
-    aria-label="Menu principal"
-    role="navigation"
+    class="from-orange-400 to-orange-500 bg-linear-to-l fixed inset-0 z-40 flex-col items-center justify-center p-10 hidden lg:hidden"
+    id="mobile-menu"
+    aria-label="Menu mobile"
 >
     <ul
-        class="flex flex-col gap-5 text-white font-semibold text-2xl items-end w-full"
-        role="menu"
+        class="flex flex-col gap-6 text-white font-bold text-3xl items-end w-full mt-16 text-center"
     >
-        <a href="/" role="menuitem"><li>Accueuil</li></a>
-        <a href="/artiste" role="menuitem"><li>Artistes</li></a>
-        <a href="/programme" role="menuitem"><li>Programme</li></a>
-        <a href="/scene" role="menuitem"><li>Scenes</li></a>
-        <a href="/infos" role="menuitem"><li>Infos Pratique</li></a>
-        <a href="/contact" role="menuitem"><li>Contact</li></a>
-        <a href="/account" role="menuitem"><li>Compte</li></a>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/artiste">Artistes</a></li>
+        <li><a href="/programme">Programme</a></li>
+        <li><a href="/scene">Scènes</a></li>
+        <li><a href="/infos">Infos Pratiques</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/account">Compte</a></li>
     </ul>
 </nav>
 
 <script>
-    const menu = document.getElementById("main-menu");
+    const mobileMenu = document.getElementById("mobile-menu");
     const button = document.getElementById("menu-toggle");
-    const header = document.getElementById("main-header");
     let menuOpen = false;
 
-    menu.style.display = "none";
-    button.setAttribute("aria-expanded", "false");
-
-    button.addEventListener("click", () => {
+    // Utilisation de classList au lieu du style en ligne pour éviter les conflits CSS avec Desktop
+    button?.addEventListener("click", () => {
         menuOpen = !menuOpen;
-        menu.style.display = menuOpen ? "flex" : "none";
-        document.body.style.overflow = menuOpen ? "hidden" : "";
-        button.setAttribute("aria-expanded", menuOpen ? "true" : "false");
+
         if (menuOpen) {
-            header.classList.add("fixed");
-            menu.focus();
+            mobileMenu?.classList.remove("hidden");
+            mobileMenu?.classList.add("flex");
+            document.body.style.overflow = "hidden"; // Empêche le scroll
+            button.setAttribute("aria-expanded", "true");
         } else {
-            header.classList.remove("fixed");
+            mobileMenu?.classList.add("hidden");
+            mobileMenu?.classList.remove("flex");
+            document.body.style.overflow = ""; // Réactive le scroll
+            button.setAttribute("aria-expanded", "false");
         }
     });
 </script>

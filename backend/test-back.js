@@ -21,10 +21,10 @@ console.log("=== DÉBUT DES TESTS ===\n");
 
 try {
     const records = await getArtistsByDate();
-    console.log("✅ getArtistsByDate :", records.length, "artistes trouvés");
+    console.log("getArtistsByDate :", records.length, "artistes trouvés");
     if (records.length > 0) testArtistId = records[0].id;
 } catch (e) {
-    console.error("❌ Erreur dans getArtistsByDate :", e.message);
+    console.error("Erreur dans getArtistsByDate :", e.message);
 }
 
 try {
