@@ -13,7 +13,7 @@ console.log(artistes);
     title=`${scene.name}`
     desc=`Page dédiée à la description de ${scene.name}`
 >
-    <div class="relative w-full h-75 flex items-end">
+    <div class="relative w-full h-125 flex items-end">
         <PbImage
             record={scene}
             imageField={scene.image}
@@ -34,7 +34,7 @@ console.log(artistes);
         <div class="flex overflow-x-auto gap-5"></div>
     </div>
 
-    <div class="flex flex-col p-10 gap-6">
+    <div class="flex flex-col p-10 gap-6 lg:grid lg:grid-cols-2">
         {artistes.map((artiste) => <EventCard art={artiste} />)}
     </div>
 </Layout>
